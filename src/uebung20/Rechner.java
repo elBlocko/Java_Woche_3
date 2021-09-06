@@ -23,7 +23,10 @@ public class Rechner extends JFrame {
 	private JTextField tfErg;
 	private String CerrMessage = "Die Eingaben sind unvollständig";
 	/**
-	 * Launch the application.
+	 * JTextfield, JLabels  aus der toolbox
+	 * 4 JButtons aus der Toolbox, im Objektinspector umbenennen
+	 * Doppelklick auf Button erzeugt Click Event Handler
+	 * 2 Methoden allesAusgefuellt() und calc(string parameter) Übergabe aus dem Eventhandler
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -62,6 +65,8 @@ public class Rechner extends JFrame {
 		tfOperandOne.setBounds(10, 47, 86, 20);
 		contentPane.add(tfOperandOne);
 		
+	
+		// EVENTHANDLER -------------------------------------------------------------------------
 		JButton btnPlus = new JButton("+");
 		btnPlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -80,7 +85,7 @@ public class Rechner extends JFrame {
 		btnMinus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (allesAusgefuellt()) {					
-					calc("minus");
+					calc("minus"); // Parameter für die Methode
 				} else {
 					tfErg.setText(CerrMessage);
 				}
@@ -115,6 +120,8 @@ public class Rechner extends JFrame {
 		btnMal.setBounds(100, 79, 48, 20);
 		contentPane.add(btnMal);
 		
+		// ---------------------------------------------------------------------------------
+		
 		tfOperandTwo = new JTextField();
 		tfOperandTwo.setToolTipText("Operand 1");
 		tfOperandTwo.setColumns(10);
@@ -127,6 +134,8 @@ public class Rechner extends JFrame {
 		tfErg.setColumns(10);
 		tfErg.setBounds(10, 117, 292, 20);
 		contentPane.add(tfErg);
+		
+		// Labels ------------------------------------------------------------------------
 		
 		JLabel lblNewLabel = new JLabel("Operand 1");
 		lblNewLabel.setBounds(10, 25, 86, 14);
@@ -141,6 +150,8 @@ public class Rechner extends JFrame {
 		contentPane.add(lblErgebnis);
 
 	}
+	
+	// METHODEN ---------------------------------------------------------------------------
 	
 	boolean allesAusgefuellt() {
 		if (tfOperandOne.getText().equals("") || tfOperandTwo.getText().equals("")){
@@ -171,7 +182,7 @@ public class Rechner extends JFrame {
 			erg = operand1 / operand2; 			
 		} else  {
 			tfErg.setText("Division durch Null ist nicht definiert");
-		    return;
+		    return; // return verlässt die Methode, vgl break verlässt die Anweisung
 		}
 		DecimalFormat f = new DecimalFormat("#0.00");
 		tfErg.setText(f.format(erg));

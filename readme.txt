@@ -5,3 +5,5 @@ rechtklick new...package uebungXX
 rechtsklick new..other... JFrame
 
 Components..componentpane..Layout...absolut (Properties)
+
+Aufgaben im doc Ordner

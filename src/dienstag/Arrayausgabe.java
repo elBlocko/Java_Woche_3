@@ -224,20 +224,29 @@ public class Arrayausgabe extends JFrame {
 		if (i < arrSize) {
 			try {
 				arr[i] = Integer.parseInt(tfZahl.getText());
+				i++;
+				tfZahl.requestFocus();
+				tfZahl.selectAll();
+				if (arrSize == i) {					
+					JOptionPane.showMessageDialog(null, "Array Ende erreicht, Ausgabe erfolgt");
+					setSecondLineVisible(false);
+					setThirdLineVisible(true);
+					return true;
+				
+				} else {
+				return false;
+				}	
 			} catch (Exception e) {
-				e.getMessage();
+				// Fehler auslesen und ausgeben				
+				JOptionPane.showMessageDialog(null,"Eingabe muss ganze Zahl sein!" + "\n" +e.getMessage()); 
+				tfZahl.requestFocus();
+				tfZahl.selectAll();
+				return false;
 			}
-			i++;	
-			tfZahl.requestFocus();
-			tfZahl.selectAll();
-				return false;			
-		} else
-		{	JOptionPane.showMessageDialog(null, "Array Ende erreicht, Ausgabe erfolgt");
-			setSecondLineVisible(false);
-			setThirdLineVisible(true);
+		} 
+		else {			
 			return true;
 		}
-
 	}
 
 	private void outputArray() {
@@ -260,7 +269,7 @@ public class Arrayausgabe extends JFrame {
 		tfAnz.requestFocus();
 		tfAnz.selectAll();
 		arr = null;
-		i=0;
+		i = 0;
 	}
 
 }

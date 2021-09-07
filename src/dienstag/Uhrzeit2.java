@@ -27,6 +27,7 @@ public class Uhrzeit2 extends JFrame {
 	private JTextField tfStunden;
 	private JTextField tfMinuten;
 	private JLabel lblAusgabe;
+	private static boolean compilerCondition = false;
 
 	/**
 	 * Launch the application.
@@ -37,7 +38,14 @@ public class Uhrzeit2 extends JFrame {
 				try {
 					Uhrzeit2 frame = new Uhrzeit2();
 					frame.setVisible(true);
-				} catch (Exception e) {
+					if (compilerCondition) {
+					throw new UhrzeitFormatException(
+							"Fehler! Wenden Sie sich bitte an den Support unter 0190/666666 5€/min");
+					}
+				} 	catch (UhrzeitFormatException ufe) {			
+					JOptionPane.showMessageDialog(null, ufe.getMessage());
+		} 
+				catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -55,16 +63,16 @@ public class Uhrzeit2 extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblStunden = new JLabel("Stunden");
 		lblStunden.setBounds(21, 24, 73, 14);
 		contentPane.add(lblStunden);
-		
+
 		tfStunden = new JTextField();
 		tfStunden.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					tfMinuten.requestFocus();
 				}
 			}
@@ -72,16 +80,16 @@ public class Uhrzeit2 extends JFrame {
 		tfStunden.setBounds(21, 49, 86, 20);
 		contentPane.add(tfStunden);
 		tfStunden.setColumns(10);
-		
+
 		JLabel lblMinuten = new JLabel("Minuten");
 		lblMinuten.setBounds(158, 24, 73, 14);
 		contentPane.add(lblMinuten);
-		
+
 		tfMinuten = new JTextField();
 		tfMinuten.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					uebernehmen();
 				}
 			}
@@ -90,7 +98,7 @@ public class Uhrzeit2 extends JFrame {
 		tfMinuten.setColumns(10);
 		tfMinuten.setBounds(158, 49, 86, 20);
 		contentPane.add(tfMinuten);
-		
+
 		JButton btnUebernehmen = new JButton("\u00DCbernehmen");
 		btnUebernehmen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -99,11 +107,11 @@ public class Uhrzeit2 extends JFrame {
 		});
 		btnUebernehmen.setBounds(278, 48, 130, 23);
 		contentPane.add(btnUebernehmen);
-		
+
 		lblAusgabe = new JLabel("...");
 		lblAusgabe.setBounds(22, 105, 222, 14);
 		contentPane.add(lblAusgabe);
-		
+
 		JButton btnEnde = new JButton("Ende");
 		btnEnde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -113,25 +121,25 @@ public class Uhrzeit2 extends JFrame {
 		btnEnde.setBounds(319, 179, 89, 23);
 		contentPane.add(btnEnde);
 	}
-	
+
 	private void uebernehmen() {
 		try{
 			int std = Integer.parseInt(tfStunden.getText());
 			int min = Integer.parseInt(tfMinuten.getText());
 			if ((std > 23) || (std < 0)) {
-				throw new NumberFormatException(
+				throw new UhrzeitFormatException(
 					"Bitte nur Stundenwerte von 0 bis 23 angeben.");
 			    }
 			if ((min > 59) || (min < 0)) {
-				throw new NumberFormatException(
+				throw new UhrzeitFormatException(
 					"Bitte nur Minutenwerte von 0 bis 59 abgeben.");
 			    }
 			lblAusgabe.setText("Ihre Uhrzeit ist "
 			    + std + ":" + min + " Uhr.");
 		}
-		catch (NumberFormatException nfe) {
+		catch (UhrzeitFormatException ufe) {
 			lblAusgabe.setText("Ungültige Uhrzeit!");
-			JOptionPane.showMessageDialog(null, nfe.getMessage());
+			JOptionPane.showMessageDialog(null, ufe.getMessage());
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());

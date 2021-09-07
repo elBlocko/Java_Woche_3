@@ -1,5 +1,19 @@
 package dienstag;
-
+/* 3 Schritte im Programm
+ * einlesen
+ * füllen 
+ * ausgeben
+ * ++reset
+ * 
+ * Programm liest Zahl aus Textfeld ein und initialisiert ein array
+ * mit der eingegebenen Größe 
+ * Felder werden ausgeblendet neue Felder werden eingeblendet
+ * Array "Felder" werden durch Eingabe in ein Textfeld mit ganzen Zahlen gefüllt
+ * nach letzter Eingabe erfolgt die Ausgabe (ausblenden der Eingabe, einblenden der Ausgabe, Focus auf reset)
+ * 2 Labels geben das Array aus, vor+rückwärts 
+ * 
+ *  by Platz 6315
+ * */
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -151,6 +165,12 @@ public class Arrayausgabe extends JFrame {
 		contentPane.add(btnNeueEingabe);
 	}
 
+	// METHODEN --------------------------------------------------------------------------------------
+	// Array
+	private void createArray() {
+		arr = new int[arrSize];
+	}
+	
 	private int getArraySize() {
 		int size = 0;
 		if (tfAnz.getText().equals("")) {
@@ -160,7 +180,8 @@ public class Arrayausgabe extends JFrame {
 		}
 		return size;
 	}
-
+	
+	// Sichtbarkeit steuern ----------------------	
 	private void setFirstLineVisible(boolean a) {
 		if (a == false) {
 			lblQuestion.setVisible(false);
@@ -171,9 +192,7 @@ public class Arrayausgabe extends JFrame {
 			lblQuestion.setVisible(true);
 			tfAnz.setVisible(true);
 			btnOkAnz.setVisible(true);
-
 		}
-
 	}
 
 	private void setSecondLineVisible(boolean a) {
@@ -186,7 +205,6 @@ public class Arrayausgabe extends JFrame {
 			tfZahl.setVisible(true);
 			btnOkZahl.setVisible(true);
 		}
-
 	}
 
 	private void setThirdLineVisible(boolean a) {
@@ -200,10 +218,50 @@ public class Arrayausgabe extends JFrame {
 		}
 	}
 
-	private void createArray() {
-		arr = new int[arrSize];
+	// Kern Methoden --------------------------------------------------------------------
+	// input
+	private boolean addNumberToArray() {
+		// alle Eingaben (i kann nicht > arrSize werden, trotzdem else return erforderlich, da boolean Methode
+		if (i < arrSize) { 
+			try {
+				arr[i] = Integer.parseInt(tfZahl.getText());
+				i++;
+				tfZahl.requestFocus();
+				tfZahl.selectAll();
+				if (arrSize == i) { // vorletzte Eingabe					
+					JOptionPane.showMessageDialog(null, "Array Ende erreicht, Ausgabe erfolgt");
+					setSecondLineVisible(false);
+					setThirdLineVisible(true);
+					return true; 				
+				} else {
+				return false; // bis vorletzte Eingabe
+				}	
+			} catch (Exception e) {
+				// Fehler auslesen und ausgeben				
+				JOptionPane.showMessageDialog(null,"Eingabe muss ganze Zahl sein!" + "\n" +e.getMessage()); 
+				tfZahl.requestFocus();
+				tfZahl.selectAll();
+				return false;
+			}
+		} 
+		else {			
+			return true;
+		}
 	}
-
+	// output
+	private void outputArray() {
+		lblAusgabeVor.setText("");
+		lblAusgabeRueck.setText("");
+		for (int tempNumber : arr) {
+			lblAusgabeVor.setText(lblAusgabeVor.getText() + " " + tempNumber);
+		}
+		for (int k = arr.length - 1; k >= 0; k--) {
+			lblAusgabeRueck.setText(lblAusgabeRueck.getText() + " " + arr[k]);
+		}
+	}	
+	
+	// Methodenaufruf in Ereignissen ----------------------------
+	
 	private void btnOkZahlExec() {
 		if (addNumberToArray()) {
 			outputArray();
@@ -219,48 +277,9 @@ public class Arrayausgabe extends JFrame {
 		tfZahl.requestFocus();
 		tfZahl.selectAll();
 	}
-
-	private boolean addNumberToArray() {
-		if (i < arrSize) {
-			try {
-				arr[i] = Integer.parseInt(tfZahl.getText());
-				i++;
-				tfZahl.requestFocus();
-				tfZahl.selectAll();
-				if (arrSize == i) {					
-					JOptionPane.showMessageDialog(null, "Array Ende erreicht, Ausgabe erfolgt");
-					setSecondLineVisible(false);
-					setThirdLineVisible(true);
-					return true;
-				
-				} else {
-				return false;
-				}	
-			} catch (Exception e) {
-				// Fehler auslesen und ausgeben				
-				JOptionPane.showMessageDialog(null,"Eingabe muss ganze Zahl sein!" + "\n" +e.getMessage()); 
-				tfZahl.requestFocus();
-				tfZahl.selectAll();
-				return false;
-			}
-		} 
-		else {			
-			return true;
-		}
-	}
-
-	private void outputArray() {
-		lblAusgabeVor.setText("");
-		lblAusgabeRueck.setText("");
-		for (int tempNumber : arr) {
-			lblAusgabeVor.setText(lblAusgabeVor.getText() + " " + tempNumber);
-		}
-		for (int k = arr.length - 1; k >= 0; k--) {
-			lblAusgabeRueck.setText(lblAusgabeRueck.getText() + " " + arr[k]);
-		}
-
-	}
-
+	
+	// ----------------------------------------------------------------------------
+	
 	private void resetProc() {
 		setThirdLineVisible(false);
 		setSecondLineVisible(false);
@@ -271,5 +290,4 @@ public class Arrayausgabe extends JFrame {
 		arr = null;
 		i = 0;
 	}
-
-}
+} // eoc

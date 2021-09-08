@@ -1,0 +1,136 @@
+package uebung_7;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+public class ArrayList_WindowBuilder extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField tfAnz;
+	private JTextField tfZahl;
+	private ArrayList<Integer> arr = new ArrayList<Integer>(); 
+	private int counter = 0;
+	// private int anz;
+	private JLabel lblAusgabeVor, lblAusgabeRueck;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Arrayausgabe_WindowBuilder frame = new Arrayausgabe_WindowBuilder();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public ArrayList_WindowBuilder() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Wieviele Zahlen sollen eingegeben werden?");
+		lblNewLabel.setBounds(10, 11, 231, 14);
+		contentPane.add(lblNewLabel);
+		
+		tfAnz = new JTextField();
+		tfAnz.setEnabled(false);
+		tfAnz.setBounds(263, 8, 62, 20);
+		contentPane.add(tfAnz);
+		tfAnz.setColumns(10);
+		
+		JButton btnAnzOk = new JButton("OK");
+		btnAnzOk.setEnabled(false);
+		//btnAnzOk.addActionListener(new ActionListener() {
+			//public void actionPerformed(ActionEvent e) {
+				
+				/*
+				 * anz = Integer.parseInt(tfAnz.getText());
+				 * 
+				 * 
+				 * btnAnzOk.setVisible(false); tfAnz.setEditable(false);
+				 */
+				
+		//	}
+		//});
+		btnAnzOk.setBounds(335, 7, 89, 23);
+		contentPane.add(btnAnzOk);
+		
+		JLabel lblNewLabel_1 = new JLabel("Zahl:");
+		lblNewLabel_1.setBounds(10, 62, 46, 14);
+		contentPane.add(lblNewLabel_1);
+		
+		tfZahl = new JTextField();
+		tfZahl.setBounds(10, 87, 86, 20);
+		contentPane.add(tfZahl);
+		tfZahl.setColumns(10);
+		
+		JButton btnZahl = new JButton("OK");
+		btnZahl.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.print(arr.size());
+				/*
+				 * try { int zahl = Integer.parseInt(tfZahl.getText()); arr.add(zahl);
+				 * 
+				 * System.out.print(arr.size());
+				 * 
+				 * lblAusgabeVor.setText(""); if (arr.size() > 0) { for(int i = 0; i <
+				 * arr.size(); i++) { lblAusgabeVor.setText(lblAusgabeVor.getText() + " " +
+				 * arr.get(i)); }
+				 * 
+				 * lblAusgabeRueck.setText(""); for(int i = arr.size() -1; i >= 0; i--) {
+				 * lblAusgabeRueck.setText(lblAusgabeRueck.getText() + " " + arr.get(i)); }
+				 * 
+				 * } counter++; } catch(Exception ex) { System.out.print(arr.size()); } if
+				 * (counter == arr.size()) { tfZahl.setVisible(false);
+				 * btnZahl.setEnabled(false); } tfZahl.requestFocus(); //tf Fahrenheit erhält
+				 * den Fokus tfZahl.selectAll(); // Markiert den Eintrag zum übeschreiben
+				 */				
+			}
+		});
+		btnZahl.setBounds(114, 86, 89, 23);
+		contentPane.add(btnZahl);
+		
+		JButton btnNeu = new JButton("Neue Eingabe");
+		btnNeu.setBounds(318, 86, 106, 23);
+		contentPane.add(btnNeu);
+		
+		lblAusgabeVor = new JLabel("Ausgabe vorw\u00E4rts");
+		lblAusgabeVor.setBounds(10, 199, 193, 14);
+		contentPane.add(lblAusgabeVor);
+		
+		lblAusgabeRueck = new JLabel("Ausgabe r\u00FCckw\u00E4rts");
+		lblAusgabeRueck.setBounds(10, 224, 193, 14);
+		contentPane.add(lblAusgabeRueck);
+		
+		JButton btnEnde = new JButton("Beenden");
+		btnEnde.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnEnde.setBounds(335, 227, 89, 23);
+		contentPane.add(btnEnde);
+	}
+}

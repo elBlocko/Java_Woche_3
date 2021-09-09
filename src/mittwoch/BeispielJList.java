@@ -24,7 +24,7 @@ public class BeispielJList extends JFrame {
 	private JLabel lblAktuellesObst;
 	private JTextField tfHinzufuegen;
 	private JButton btnHinzufuegen;
-
+	
 	/**
 	 * Launch the application.
 	 */

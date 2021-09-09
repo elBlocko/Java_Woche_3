@@ -17,7 +17,7 @@ public class TMyObjectTest {
 		// Möglichkeit eigene Methoden hinzuzufügen
 		TMyObjectList ObjectList2; // neue Liste deklariert
 		
-		ObjectList2 = new TMyObjectList(/*new ArrayList<TMyObject>()*/);
+		ObjectList2 = new TMyObjectList(new ArrayList<TMyObject>());
 		ObjectList2.add(new TMyObject()); // leeres Objekt mit
 		
 		// TODO: ObjectList2.Max.Id 

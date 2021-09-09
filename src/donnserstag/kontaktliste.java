@@ -29,6 +29,7 @@ import javax.swing.ListSelectionModel;
 public class kontaktliste extends JFrame {
 
 	private JPanel contentPane;
+	
 	private JTextField tfName;
 	private JTextField tfVorname;
 	private JTextField tfTelNummer;
@@ -37,6 +38,7 @@ public class kontaktliste extends JFrame {
 	private JButton btnSave;
 	private JButton btnDelete;
 	private JButton btnEnd;
+	private JButton btnBearbeiten;
 
 	private JLabel lblName;
 	private JLabel lblVorname;
@@ -46,10 +48,9 @@ public class kontaktliste extends JFrame {
 
 	private JScrollPane scrlpnPersonen;
 	private JList<?> lbPersonen;
-
 	private TPersonenModel personModel1;
+	
 	private int counter = 0;
-	private JButton btnBearbeiten;
 
 	/**
 	 * Launch the application.
@@ -125,7 +126,7 @@ public class kontaktliste extends JFrame {
 		btnSave = new JButton("\u00FCbernehmen >>");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setListContent();
+				btnSaveExec();
 			}
 		});
 		btnSave.setBounds(202, 75, 203, 23);
@@ -150,6 +151,11 @@ public class kontaktliste extends JFrame {
 		contentPane.add(btnEnd);
 
 		btnBearbeiten = new JButton("Bearbeiten");
+		btnBearbeiten.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bearbeiten();				
+			}
+		});
 		btnBearbeiten.setBounds(261, 240, 144, 23);
 		contentPane.add(btnBearbeiten);
 
@@ -203,30 +209,42 @@ public class kontaktliste extends JFrame {
 		}
 		
 	}
+
+	private void bearbeiten() {		
+	try {
+	String daten = (String) lbPersonen.getSelectedValue();
+	String[] werte = daten.split("; ");
+	tfName.setText(werte[0]);
+	tfVorname.setText(werte[1]);
+	tfTelNummer.setText(werte[2]);
+	tfEmail.setText(werte[3]);
+	personModel1.remove(lbPersonen.getSelectedIndex()); 
+	} catch (Exception e) {
+		 JOptionPane.showMessageDialog(rootPane, "Keine Datei ausgewählt", "Löschen nicht möglich",
+					JOptionPane.WARNING_MESSAGE);
+	}	
+	}
 	
-	/*
-	 * private void loeschen() { //
-	 * System.out.println(btnLoeschen.getActionCommand()); Konsole Wert ausgeben if
-	 * (btnLoeschen.getActionCommand() == "markierten Eintrag löschen") { int delete
-	 * = JOptionPane.showConfirmDialog(rootPane, "Wirklich löschen?",
-	 * "Datei aus Bibliothek löschen", JOptionPane.YES_NO_OPTION,
-	 * JOptionPane.QUESTION_MESSAGE);
-	 * 
-	 * if (delete == 0) { try { listenModel.remove(kontaktliste.getSelectedIndex());
-	 * }
-	 * 
-	 * catch (ArrayIndexOutOfBoundsException e) {
-	 * JOptionPane.showMessageDialog(rootPane, "Keine Datei ausgewählt",
-	 * "Löschen nicht möglich", JOptionPane.WARNING_MESSAGE); } // int sel =
-	 * kontaktliste.getSelectedIndex(); // System.out.println("getSelectedIndex " +
-	 * sel);
-	 * 
-	 * } } } private void bearbeiten() { String daten =
-	 * kontaktliste.getSelectedValue(); String[] werte = daten.split("; ");
-	 * tfNachname.setText(werte[0]); tfVorname.setText(werte[1]);
-	 * tfTelefon.setText(werte[2]); tfEmail.setText(werte[3]);
-	 * listenModel.remove(kontaktliste.getSelectedIndex());
-	 * 
-	 * }
-	 */
+	private void setFieldEmpty () {
+		tfName.setText("");
+		tfVorname.setText("");
+		tfTelNummer.setText("");
+		tfEmail.setText("");		
+		
+	}
+	
+	private void btnSaveExec() {
+		setListContent();
+		setFieldEmpty();		
+		
+	}
+	
+//	private void putSelectedObject() {
+//	 int tempIndex = lbPersonen.getSelectedIndex();
+//	 TPerson tempPerson;
+//	for (int i = 0; i < personModel1.size(); i++) {
+//		personModel1.getElementAt(tempIndex);
+//   }
+// }
 }
+
